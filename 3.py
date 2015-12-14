@@ -3,26 +3,29 @@
  
 import RPi.GPIO as GPIO 
 import time
-
+import datetime
 
 GPIO.setmode(GPIO.BCM) 
 GPIO.setwarnings(False)
 
-LED1 = 18
-door1 = 12
+fridge = 12
 
+log = open('fridge.log', 'a')
 
-GPIO.setup(LED1, GPIO.OUT)
-GPIO.setup(door1, GPIO.IN, GPIO.PUD_UP)
-
-GPIO.output(LED1, 0)
+GPIO.setup(fridge, GPIO.IN, GPIO.PUD_UP)
 
 while True:
-   if GPIO.input(door1) == False:
-       print("Door 1 is open.")
+   if GPIO.input(fridge) == False:
+       ts = time.time() 
+       dt = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+       log.write(ts + "," + dt + "," + "closed\n")
+       print(dt + " - Refridgerator 1 is open.")
        time.sleep(2)
    else:
-     if GPIO.input(door1) == True:
-       print("Door 1 is touching.")
+     if GPIO.input(fridge) == True:
+       ts = time.time() 
+       dt = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+       log.write(str(dt) + "," + str(ts) + "," + "closed.\n")
+       print(dt + " - Door is now closed.")
        time.sleep(2)       
 GPIO.cleanup()
