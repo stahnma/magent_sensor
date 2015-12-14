@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO 
 import time
 import datetime
+import os
 
 GPIO.setmode(GPIO.BCM) 
 GPIO.setwarnings(False)
@@ -21,7 +22,8 @@ while True:
 	 laststate = 'open'
 	 log.write(str(dt) + "," + str(ts) + "," + "open\n")
 	 print(str(dt) + "," + str(ts) + "," + "fridge open")
-       print(str(dt) + "," + str(ts) + "," + "fridge open")
+       if os.environ.get('DEBUG'):
+         print(str(dt) + "," + str(ts) + "," + "fridge open")
        time.sleep(2)
    else:
      if GPIO.input(fridge) == True:
@@ -31,6 +33,7 @@ while True:
 	 laststate = 'closed'
 	 log.write(str(dt) + "," + str(ts) + "," + "closed\n")
 	 print(str(dt) + "," + str(ts) + "," + "fridge closed")
-       print(str(dt) + "," + str(ts) + "," + "fridge closed")
+       if os.environ.get('DEBUG'):
+         print(str(dt) + "," + str(ts) + "," + "fridge closed")
        time.sleep(2)       
 GPIO.cleanup()
