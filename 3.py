@@ -20,7 +20,7 @@ while True:
 	 ts = time.time() 
 	 dt = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 	 log.write(str(dt) + "," + str(ts) + "," + "open\n")
-	 print(dt + " - Refridgerator door is open.")
+	 print(dt + " Refridgerator door is open.")
        time.sleep(2)
    else:
      if GPIO.input(fridge) == True:
